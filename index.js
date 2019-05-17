@@ -1,7 +1,6 @@
 "use strict";
 exports.__esModule = true;
 var tf = require("@tensorflow/tfjs-node");
-var fittedModel = undefined;
 var model = tf.sequential();
 model.add(tf.layers.dense({ units: 1, inputShape: [1] }));
 model.compile({ loss: 'meanSquaredError', optimizer: 'sgd' });
@@ -10,7 +9,6 @@ var ys = tf.tensor2d([1, 3, 5, 7, 9, 11, 13, 15], [8, 1]);
 xs.print();
 ys.print();
 model.fit(xs, ys, { epochs: 10 }).then(function () {
-    fittedModel = model;
     var prediction = model
         .predict(tf.tensor2d([5], [1, 1]))
         .toString()
