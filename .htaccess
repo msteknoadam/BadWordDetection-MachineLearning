@@ -1,0 +1,7 @@
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
+PassengerAppRoot "/home/tekntehf/ai.tekno.icu/BadWordDetection-MachineLearning"
+PassengerBaseURI "/BadWordDetection-MachineLearning"
+PassengerNodejs "/home/tekntehf/nodevenv/ai.tekno.icu/BadWordDetection-MachineLearning/9/bin/node"
+PassengerAppType node
+PassengerStartupFile index.ts
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
