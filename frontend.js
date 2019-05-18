@@ -1,4 +1,4 @@
-const socket = io('http://ai.tekno.icu/BadWordDetection-MachineLearning:3000');
+const socket = io('https://ai.tekno.icu:3000');
 
 socket.emit('test', 1);
 
