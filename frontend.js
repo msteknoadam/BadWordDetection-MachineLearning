@@ -1,14 +1,14 @@
 const ws = new WebSocket('wss://ai.tekno.icu:8080/');
 
-ws.on('open', () => {
+ws.onopen = () => {
 	console.log('Connected.');
 });
 
-ws.on('open', () => {
+ws.onclose = () => {
 	close.log('Disconnected.');
 });
 
-ws.on('message', data => {
+ws.onmessage = data => {
 	console.log('Received: %s', data);
 });
 
