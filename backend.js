@@ -106,7 +106,14 @@ var server = https.createServer({
     key: fs.readFileSync('../nodessl/key.pem')
 });
 var wss = new WS.Server({ server: server });
+var useridCounter = 0;
 wss.on('connection', function (ws) {
+    var userid = useridCounter;
+    useridCounter++;
+    console.log("User " + userid + " connected.");
+    ws.on('disconnect', function () {
+        console.log("User " + userid + " disconnected.");
+    });
     ws.on('message', function (data) {
         console.log('Received %s', data);
     });

@@ -128,7 +128,15 @@ const server = https.createServer({
 
 const wss = new WS.Server({ server });
 
+let useridCounter = 0;
+
 wss.on('connection', ws => {
+	let userid = useridCounter;
+	useridCounter++;
+	console.log(`User ${userid} connected.`);
+	ws.on('disconnect', () => {
+		console.log(`User ${userid} disconnected.`);
+	});
 	ws.on('message', data => {
 		console.log('Received %s', data);
 	});
