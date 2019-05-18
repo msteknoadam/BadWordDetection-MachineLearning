@@ -3,6 +3,7 @@ exports.__esModule = true;
 var tf = require("@tensorflow/tfjs-node");
 var app = require('express')();
 var http = require('http').Server(app);
+var PORT = 80;
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
 });
@@ -36,7 +37,7 @@ model.fit(xs, ys, { epochs: 10 }).then(function () {
             console.log(data);
         });
     });
-    http.listen(3000, function () {
-        console.log('Listening on *:3000');
+    http.listen(PORT, function () {
+        console.log("Listening on *:" + PORT);
     });
 });

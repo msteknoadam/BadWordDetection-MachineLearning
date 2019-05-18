@@ -1,6 +1,7 @@
 import * as tf from '@tensorflow/tfjs-node';
 const app = require('express')();
 const http = require('http').Server(app);
+const PORT = 80;
 
 app.get('/', (req, res) => {
 	res.sendFile(__dirname + '/index.html');
@@ -43,7 +44,7 @@ model.fit(xs, ys, { epochs: 10 }).then(() => {
 			console.log(data);
 		});
 	});
-	http.listen(3000, () => {
-		console.log('Listening on *:3000');
+	http.listen(PORT, () => {
+		console.log(`Listening on *:${PORT}`);
 	});
 });
