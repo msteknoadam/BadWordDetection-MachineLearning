@@ -102,7 +102,14 @@ var fs = require('fs');
 var https = require('https');
 var http = require('http');
 var PORT = 8080;
-var isProduction = process.env.NODE_ENV ? true : false;
+var isProduction;
+try {
+    fs.readFileSync('production.json');
+    isProduction = true;
+}
+catch (e) {
+    isProduction = false;
+}
 var server = isProduction
     ? http.createServer()
     : https.createServer({
@@ -123,6 +130,6 @@ wss.on('connection', function (ws) {
     });
 });
 server.listen(PORT, function () {
-    console.log('Started listening on :%s . Is production?: %s', PORT);
+    console.log('Started listening on :%s . Is production?: %s', PORT, isProduction);
 });
 // VER 4 END
