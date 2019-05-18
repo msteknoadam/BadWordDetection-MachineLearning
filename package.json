@@ -2,15 +2,25 @@
 	"name": "badworddetection-machinelearning",
 	"version": "1.0.0",
 	"description": "",
-	"main": "index.js",
+	"main": "backend.js",
 	"scripts": {
-		"run": "node index.js",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"tsc": "tsc backend.ts && node backend.js",
+		"run": "node backend.js",
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "browserify frontend.js -o dist/bundle.js",
+		"watch": "watchify frontend.js -o dist/bundle.js -v"
 	},
 	"author": "TEKNO",
 	"license": "ISC",
 	"dependencies": {
 		"@tensorflow/tfjs-node": "^1.1.2",
+		"express": "^4.17.0",
+		"socket.io": "^2.2.0",
+		"socket.io-client": "^2.2.0",
 		"typescript": "^3.4.5"
+	},
+	"devDependencies": {
+		"webpack": "^4.31.0",
+		"webpack-dev-server": "^3.4.1"
 	}
 }
