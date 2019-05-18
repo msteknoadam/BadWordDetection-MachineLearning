@@ -1,4 +1,8 @@
-const ws = new WebSocket(`ws${localStorage.getItem('production') ? '' : 's'}://ai.tekno.icu:8080/`);
+const ws = new WebSocket(
+	`ws${localStorage.getItem('production') ? '' : 's'}://${
+		localStorage.getItem('production') ? 'localhost:8080' : 'ai.tekno.icu:8080'
+	}`
+);
 
 ws.onopen = () => {
 	console.log('Connected.');
