@@ -42,20 +42,58 @@
 // 		console.log(`Listening on *:${PORT}`);
 // 	});
 // });
-var PORT = 3000;
+// VER 1 END
+// const PORT = 3000;
+// const fs = require('fs');
+// const cert = fs.readFileSync('../socketiossl/cert.pem');
+// const key = fs.readFileSync('../socketiossl/key.pem');
+// const server = require('https').createServer({
+// 	cert: cert,
+// 	key: key,
+// });
+// // console.log(`Certificate: ${cert}`);
+// // console.log(`Key: ${key}`);
+// const io = require('socket.io')(server);
+// io.on('connection', socket => {
+// 	console.log('A user has connected.');
+// 	socket.on('disconnect', () => console.log('A user has disconnected.'));
+// 	socket.on('test', data => console.log(data));
+// });
+// server.listen(PORT, () => console.log(`Started listening on localhost:${PORT}`));
+// VER 2 END
+var app = require('express')();
 var fs = require('fs');
-var cert = fs.readFileSync('../socketiossl/cert.pem');
-var key = fs.readFileSync('../socketiossl/key.pem');
+var PORT = 80;
+var SPORT = 443;
+var cert = fs.readFileSync('../socketiossl/cert.pem', 'utf8');
+var key = fs.readFileSync('../socketiossl/key.pem', 'utf8');
+var credentials = { key: key, cert: cert };
 var server = require('https').createServer({
     cert: cert,
     key: key
 });
-// console.log(`Certificate: ${cert}`);
-// console.log(`Key: ${key}`);
-var io = require('socket.io')(server);
-io.on('connection', function (socket) {
-    console.log('A user has connected.');
-    socket.on('disconnect', function () { return console.log('A user has disconnected.'); });
-    socket.on('test', function (data) { return console.log(data); });
+var httpServer = require('http').createServer(app);
+var httpsServer = require('https').createServer(credentials, app);
+app.get('/', function (req, res) {
+    res.sendFile(__dirname + '/index.html');
 });
-server.listen(PORT, function () { return console.log("Started listening on localhost:" + PORT); });
+app.get('/frontend.js', function (req, res) {
+    res.sendFile(__dirname + '/frontend.js');
+});
+var io = require('socket.io')(httpsServer);
+io.on('connection', function (socket) {
+    console.log('A user connected.');
+    socket.on('disconnect', function () {
+        console.log('A user disconnected');
+    });
+    socket.on('test', function (data) {
+        console.log(data);
+    });
+});
+httpServer.listen(PORT, function () {
+    console.log("Listening HTTP on *:" + PORT);
+});
+httpsServer.listen(SPORT, function () {
+    console.log("Listening HTTPS on *:" + SPORT);
+});
+// VER 3 END

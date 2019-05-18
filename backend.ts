@@ -49,26 +49,69 @@
 // 	});
 // });
 
-const PORT = 3000;
+// VER 1 END
 
+// const PORT = 3000;
+
+// const fs = require('fs');
+
+// const cert = fs.readFileSync('../socketiossl/cert.pem');
+// const key = fs.readFileSync('../socketiossl/key.pem');
+// const server = require('https').createServer({
+// 	cert: cert,
+// 	key: key,
+// });
+
+// // console.log(`Certificate: ${cert}`);
+// // console.log(`Key: ${key}`);
+
+// const io = require('socket.io')(server);
+
+// io.on('connection', socket => {
+// 	console.log('A user has connected.');
+// 	socket.on('disconnect', () => console.log('A user has disconnected.'));
+// 	socket.on('test', data => console.log(data));
+// });
+
+// server.listen(PORT, () => console.log(`Started listening on localhost:${PORT}`));
+
+// VER 2 END
+
+const app = require('express')();
 const fs = require('fs');
-
-const cert = fs.readFileSync('../socketiossl/cert.pem');
-const key = fs.readFileSync('../socketiossl/key.pem');
+const PORT = 80;
+const SPORT = 443;
+const cert = fs.readFileSync('../socketiossl/cert.pem', 'utf8');
+const key = fs.readFileSync('../socketiossl/key.pem', 'utf8');
+var credentials = { key: key, cert: cert };
 const server = require('https').createServer({
 	cert: cert,
 	key: key,
 });
+const httpServer = require('http').createServer(app);
+const httpsServer = require('https').createServer(credentials, app);
 
-// console.log(`Certificate: ${cert}`);
-// console.log(`Key: ${key}`);
-
-const io = require('socket.io')(server);
-
+app.get('/', (req, res) => {
+	res.sendFile(__dirname + '/index.html');
+});
+app.get('/frontend.js', (req, res) => {
+	res.sendFile(__dirname + '/frontend.js');
+});
+const io = require('socket.io')(httpsServer);
 io.on('connection', socket => {
-	console.log('A user has connected.');
-	socket.on('disconnect', () => console.log('A user has disconnected.'));
-	socket.on('test', data => console.log(data));
+	console.log('A user connected.');
+	socket.on('disconnect', () => {
+		console.log('A user disconnected');
+	});
+	socket.on('test', data => {
+		console.log(data);
+	});
+});
+httpServer.listen(PORT, () => {
+	console.log(`Listening HTTP on *:${PORT}`);
+});
+httpsServer.listen(SPORT, () => {
+	console.log(`Listening HTTPS on *:${SPORT}`);
 });
 
-server.listen(PORT, () => console.log(`Started listening on localhost:${PORT}`));
+// VER 3 END
