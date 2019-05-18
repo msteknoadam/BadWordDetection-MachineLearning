@@ -51,7 +51,17 @@
 
 const PORT = 3000;
 
-const server = require('http').createServer();
+const fs = require('fs');
+
+const cert = fs.readFileSync('../socketiossl/cert.pem');
+const key = fs.readFileSync('../socketiossl/key.pem');
+const server = require('https').createServer({
+	cert: cert,
+	key: key,
+});
+
+console.log(`Certificate: ${cert}`);
+console.log(`Key: ${key}`);
 
 const io = require('socket.io')(server);
 

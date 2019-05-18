@@ -43,7 +43,15 @@
 // 	});
 // });
 var PORT = 3000;
-var server = require('http').createServer();
+var fs = require('fs');
+var cert = fs.readFileSync('../socketiossl/cert.pem');
+var key = fs.readFileSync('../socketiossl/key.pem');
+var server = require('https').createServer({
+    cert: cert,
+    key: key
+});
+console.log("Certificate: " + cert);
+console.log("Key: " + key);
 var io = require('socket.io')(server);
 io.on('connection', function (socket) {
     console.log('A user has connected.');
