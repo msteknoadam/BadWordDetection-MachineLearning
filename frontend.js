@@ -1,4 +1,4 @@
-import io from 'socket.io-client';
+const io = window.io;
 
 const socket = io('http://localhost:3000');
 
