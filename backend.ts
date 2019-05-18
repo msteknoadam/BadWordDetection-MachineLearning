@@ -1,7 +1,7 @@
 import * as tf from '@tensorflow/tfjs-node';
 const app = require('express')();
 const http = require('http').Server(app);
-const PORT = 80;
+const PORT = 3000;
 
 app.get('/', (req, res) => {
 	res.sendFile(__dirname + '/index.html');

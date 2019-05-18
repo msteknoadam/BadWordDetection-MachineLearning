@@ -3,7 +3,7 @@ exports.__esModule = true;
 var tf = require("@tensorflow/tfjs-node");
 var app = require('express')();
 var http = require('http').Server(app);
-var PORT = 80;
+var PORT = 3000;
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
 });
