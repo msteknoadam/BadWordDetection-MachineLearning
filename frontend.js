@@ -5,7 +5,7 @@ ws.onopen = () => {
 };
 
 ws.onclose = () => {
-	close.log('Disconnected.');
+	console.log('Disconnected.');
 };
 
 ws.onmessage = data => {
