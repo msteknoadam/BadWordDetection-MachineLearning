@@ -61,39 +61,57 @@
 // });
 // server.listen(PORT, () => console.log(`Started listening on localhost:${PORT}`));
 // VER 2 END
-var app = require('express')();
-var fs = require('fs');
-var PORT = 8080;
-var SPORT = 8443;
-var cert = fs.readFileSync('../socketiossl/cert.pem', 'utf8');
-var key = fs.readFileSync('../socketiossl/key.pem', 'utf8');
-var credentials = { key: key, cert: cert };
-var server = require('https').createServer({
-    cert: cert,
-    key: key
-});
-var httpServer = require('http').createServer(app);
-var httpsServer = require('https').createServer(credentials, app);
-app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/index.html');
-});
-app.get('/frontend.js', function (req, res) {
-    res.sendFile(__dirname + '/frontend.js');
-});
-var io = require('socket.io')(httpsServer);
-io.on('connection', function (socket) {
-    console.log('A user connected.');
-    socket.on('disconnect', function () {
-        console.log('A user disconnected');
-    });
-    socket.on('test', function (data) {
-        console.log(data);
-    });
-});
-httpServer.listen(PORT, function () {
-    console.log("Listening HTTP on *:" + PORT);
-});
-httpsServer.listen(SPORT, function () {
-    console.log("Listening HTTPS on *:" + SPORT);
-});
+// const app = require('express')();
+// const fs = require('fs');
+// const PORT = 8080;
+// const SPORT = 8443;
+// const cert = fs.readFileSync('../socketiossl/cert.pem', 'utf8');
+// const key = fs.readFileSync('../socketiossl/key.pem', 'utf8');
+// var credentials = { key: key, cert: cert };
+// const server = require('https').createServer({
+// 	cert: cert,
+// 	key: key,
+// });
+// const httpServer = require('http').createServer(app);
+// const httpsServer = require('https').createServer(credentials, app);
+// app.get('/', (req, res) => {
+// 	res.sendFile(__dirname + '/index.html');
+// });
+// app.get('/frontend.js', (req, res) => {
+// 	res.sendFile(__dirname + '/frontend.js');
+// });
+// const io = require('socket.io')(httpsServer);
+// io.on('connection', socket => {
+// 	console.log('A user connected.');
+// 	socket.on('disconnect', () => {
+// 		console.log('A user disconnected');
+// 	});
+// 	socket.on('test', data => {
+// 		console.log(data);
+// 	});
+// });
+// httpServer.listen(PORT, () => {
+// 	console.log(`Listening HTTP on *:${PORT}`);
+// });
+// httpsServer.listen(SPORT, () => {
+// 	console.log(`Listening HTTPS on *:${SPORT}`);
+// });
 // VER 3 END
+var WS = require('ws');
+var fs = require('fs');
+var https = require('https');
+var PORT = 8080;
+var server = https.createServer({
+    cert: fs.readFileSync('../nodessl/cert.pem'),
+    key: fs.readFileSync('../nodessl/key.pem')
+});
+var wss = new WS.Server({ server: server });
+wss.on('connection', function (ws) {
+    ws.on('message', function (data) {
+        console.log('Received %s', data);
+    });
+});
+server.listen(PORT, function () {
+    console.log('Started listening on :%s', PORT);
+});
+// VER 4 END

@@ -15,9 +15,9 @@
 	"dependencies": {
 		"@tensorflow/tfjs-node": "^1.1.2",
 		"express": "^4.17.0",
-		"socket.io": "^2.2.0",
 		"socket.io-client": "^2.2.0",
-		"typescript": "^3.4.5"
+		"typescript": "^3.4.5",
+		"ws": "^7.0.0"
 	},
 	"devDependencies": {
 		"webpack": "^4.31.0",

@@ -77,41 +77,65 @@
 
 // VER 2 END
 
-const app = require('express')();
-const fs = require('fs');
-const PORT = 8080;
-const SPORT = 8443;
-const cert = fs.readFileSync('../socketiossl/cert.pem', 'utf8');
-const key = fs.readFileSync('../socketiossl/key.pem', 'utf8');
-var credentials = { key: key, cert: cert };
-const server = require('https').createServer({
-	cert: cert,
-	key: key,
-});
-const httpServer = require('http').createServer(app);
-const httpsServer = require('https').createServer(credentials, app);
+// const app = require('express')();
+// const fs = require('fs');
+// const PORT = 8080;
+// const SPORT = 8443;
+// const cert = fs.readFileSync('../socketiossl/cert.pem', 'utf8');
+// const key = fs.readFileSync('../socketiossl/key.pem', 'utf8');
+// var credentials = { key: key, cert: cert };
+// const server = require('https').createServer({
+// 	cert: cert,
+// 	key: key,
+// });
+// const httpServer = require('http').createServer(app);
+// const httpsServer = require('https').createServer(credentials, app);
 
-app.get('/', (req, res) => {
-	res.sendFile(__dirname + '/index.html');
-});
-app.get('/frontend.js', (req, res) => {
-	res.sendFile(__dirname + '/frontend.js');
-});
-const io = require('socket.io')(httpsServer);
-io.on('connection', socket => {
-	console.log('A user connected.');
-	socket.on('disconnect', () => {
-		console.log('A user disconnected');
-	});
-	socket.on('test', data => {
-		console.log(data);
-	});
-});
-httpServer.listen(PORT, () => {
-	console.log(`Listening HTTP on *:${PORT}`);
-});
-httpsServer.listen(SPORT, () => {
-	console.log(`Listening HTTPS on *:${SPORT}`);
-});
+// app.get('/', (req, res) => {
+// 	res.sendFile(__dirname + '/index.html');
+// });
+// app.get('/frontend.js', (req, res) => {
+// 	res.sendFile(__dirname + '/frontend.js');
+// });
+// const io = require('socket.io')(httpsServer);
+// io.on('connection', socket => {
+// 	console.log('A user connected.');
+// 	socket.on('disconnect', () => {
+// 		console.log('A user disconnected');
+// 	});
+// 	socket.on('test', data => {
+// 		console.log(data);
+// 	});
+// });
+// httpServer.listen(PORT, () => {
+// 	console.log(`Listening HTTP on *:${PORT}`);
+// });
+// httpsServer.listen(SPORT, () => {
+// 	console.log(`Listening HTTPS on *:${SPORT}`);
+// });
 
 // VER 3 END
+
+const WS = require('ws');
+const fs = require('fs');
+const https = require('https');
+const PORT = 8080;
+
+const server = https.createServer({
+	cert: fs.readFileSync('../nodessl/cert.pem'),
+	key: fs.readFileSync('../nodessl/key.pem'),
+});
+
+const wss = new WS.Server({ server });
+
+wss.on('connection', ws => {
+	ws.on('message', data => {
+		console.log('Received %s', data);
+	});
+});
+
+server.listen(PORT, () => {
+	console.log('Started listening on :%s', PORT);
+});
+
+// VER 4 END

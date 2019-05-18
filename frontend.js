@@ -1,5 +1,15 @@
-const socket = io('https://ai.tekno.icu:8443');
+const ws = new WebSocket('ws://ai.tekno.icu/');
 
-socket.emit('test', 1);
+ws.on('open', () => {
+	console.log('Connected.');
+});
 
-window.socket = socket;
+ws.on('open', () => {
+	close.log('Disconnected.');
+});
+
+ws.on('message', data => {
+	console.log('Received: %s', data);
+});
+
+window.ws = ws;
