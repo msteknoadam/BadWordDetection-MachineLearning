@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "backend.js",
 	"scripts": {
-		"tsc": "tsc backend.ts && node backend.js",
+		"tsc": "tsc backend.ts && NODE_ENV=production node backend.js",
 		"run": "node backend.js",
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"build": "browserify frontend.js -o dist/bundle.js",

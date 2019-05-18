@@ -119,12 +119,16 @@
 const WS = require('ws');
 const fs = require('fs');
 const https = require('https');
+const http = require('http');
 const PORT = 8080;
+const isProduction = process.env.NODE_ENV ? true : false;
 
-const server = https.createServer({
-	cert: fs.readFileSync('../nodessl/cert.pem'),
-	key: fs.readFileSync('../nodessl/key.pem'),
-});
+const server = isProduction
+	? http.createServer()
+	: https.createServer({
+			cert: fs.readFileSync('../nodessl/cert.pem'),
+			key: fs.readFileSync('../nodessl/key.pem'),
+	  });
 
 const wss = new WS.Server({ server });
 
@@ -143,7 +147,7 @@ wss.on('connection', ws => {
 });
 
 server.listen(PORT, () => {
-	console.log('Started listening on :%s', PORT);
+	console.log('Started listening on :%s . Is production?: %s', PORT);
 });
 
 // VER 4 END

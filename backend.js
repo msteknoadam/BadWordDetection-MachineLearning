@@ -100,11 +100,15 @@
 var WS = require('ws');
 var fs = require('fs');
 var https = require('https');
+var http = require('http');
 var PORT = 8080;
-var server = https.createServer({
-    cert: fs.readFileSync('../nodessl/cert.pem'),
-    key: fs.readFileSync('../nodessl/key.pem')
-});
+var isProduction = process.env.NODE_ENV ? true : false;
+var server = isProduction
+    ? http.createServer()
+    : https.createServer({
+        cert: fs.readFileSync('../nodessl/cert.pem'),
+        key: fs.readFileSync('../nodessl/key.pem')
+    });
 var wss = new WS.Server({ server: server });
 var useridCounter = 0;
 wss.on('connection', function (ws) {
@@ -119,6 +123,6 @@ wss.on('connection', function (ws) {
     });
 });
 server.listen(PORT, function () {
-    console.log('Started listening on :%s', PORT);
+    console.log('Started listening on :%s . Is production?: %s', PORT);
 });
 // VER 4 END
