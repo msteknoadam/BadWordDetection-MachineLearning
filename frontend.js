@@ -1,4 +1,4 @@
-const socket = io('https://ai.tekno.icu:3000');
+const socket = io('https://ai.tekno.icu:8443');
 
 socket.emit('test', 1);
 
