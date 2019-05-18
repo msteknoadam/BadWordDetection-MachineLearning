@@ -63,8 +63,8 @@
 // VER 2 END
 var app = require('express')();
 var fs = require('fs');
-var PORT = 80;
-var SPORT = 443;
+var PORT = 8080;
+var SPORT = 8443;
 var cert = fs.readFileSync('../socketiossl/cert.pem', 'utf8');
 var key = fs.readFileSync('../socketiossl/key.pem', 'utf8');
 var credentials = { key: key, cert: cert };
