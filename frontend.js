@@ -1,4 +1,4 @@
-const ws = new WebSocket('ws://ai.tekno.icu:8080/');
+const ws = new WebSocket('wss://ai.tekno.icu:8080/');
 
 ws.on('open', () => {
 	console.log('Connected.');
