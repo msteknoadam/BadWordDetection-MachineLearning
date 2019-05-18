@@ -1,3 +1,6 @@
 node_modules
 .htaccess
 *.tmp-*
+node_modules.zip
+.well-known
+cgi-bin/
