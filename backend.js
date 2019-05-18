@@ -50,8 +50,8 @@ var server = require('https').createServer({
     cert: cert,
     key: key
 });
-console.log("Certificate: " + cert);
-console.log("Key: " + key);
+// console.log(`Certificate: ${cert}`);
+// console.log(`Key: ${key}`);
 var io = require('socket.io')(server);
 io.on('connection', function (socket) {
     console.log('A user has connected.');

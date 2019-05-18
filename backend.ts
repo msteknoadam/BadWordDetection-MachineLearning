@@ -60,8 +60,8 @@ const server = require('https').createServer({
 	key: key,
 });
 
-console.log(`Certificate: ${cert}`);
-console.log(`Key: ${key}`);
+// console.log(`Certificate: ${cert}`);
+// console.log(`Key: ${key}`);
 
 const io = require('socket.io')(server);
 
