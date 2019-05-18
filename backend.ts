@@ -39,6 +39,9 @@ model.fit(xs, ys, { epochs: 10 }).then(() => {
 		socket.on('disconnect', () => {
 			console.log('A user disconnected');
 		});
+		socket.on('test', data => {
+			console.log(data);
+		});
 	});
 	http.listen(3000, () => {
 		console.log('Listening on *:3000');

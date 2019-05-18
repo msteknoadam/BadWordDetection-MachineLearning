@@ -1,5 +1,5 @@
-const io = window.io;
+const socket = io();
 
-const socket = io('http://localhost:3000');
+socket.emit('test', 1);
 
 window.socket = socket;
