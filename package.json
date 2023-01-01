@@ -20,7 +20,7 @@
 		"ws": "^7.0.0"
 	},
 	"devDependencies": {
-		"webpack": "^4.31.0",
+		"webpack": "^5.75.0",
 		"webpack-dev-server": "^3.4.1"
 	}
 }
